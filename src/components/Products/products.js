@@ -1,4 +1,5 @@
 import {makePagination} from '../../helpers.js'
+import {transportSend} from "../../helpers";
 
 export default {
     name: "Products",
@@ -39,11 +40,8 @@ export default {
          */
         fetchProducts(pageLink) {
             this.isLoading = true;
-            pageLink = pageLink || 'http://my-project.loc/api/products';
-            fetch(pageLink, {
-                method: 'post',
-            })
-                .then(res => res.json())
+            pageLink = pageLink || 'products';
+            transportSend(pageLink)
                 .then(res => {
                     this.products = res.data;
                     this.pagination = makePagination(res.meta, res.links);
@@ -52,18 +50,34 @@ export default {
                 .catch(err => {
                     console.log(err);
                     this.isLoading = false;
-                });
+                    this.$notify({
+                        group: 'foo',
+                        type: 'error',
+                        text: err
+                    });
+                })
         },
 
-        /**
-         * @param meta
-         * @param links
-         */
-        makePagination(meta, links) {
-            this.pagination.currentPage = meta.current_page;
-            this.pagination.lastPage = meta.last_page;
-            this.pagination.nextPageUrl = links.next;
-            this.pagination.prevPageUrl = links.prev
-        },
+        deleteProduct(productId) {
+            this.isLoading = true;
+            transportSend('product/delete', {id: productId})
+                .then(res => {
+                    this.fetchProducts();
+                    this.$notify({
+                        group: 'foo',
+                        type: 'success',
+                        text: 'deleting successful',
+                        speed: 1000
+                    });
+                })
+                .catch(err => {
+                    this.fetchProducts();
+                    this.$notify({
+                        group: 'foo',
+                        type: 'error',
+                        text: err
+                    });
+                })
+        }
     }
 }

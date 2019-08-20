@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <notifications group="foo" style="margin-top: 15px"/>
     <router-view/>
   </div>
 </template>

@@ -11,3 +11,24 @@ export function makePagination(meta, links) {
     };
     return pagination;
 }
+
+/**
+ * @param path
+ * @returns {Promise<Response | never>}
+ */
+export function transportSend(path, data) {
+    let domainUrl = process.env.ROOT_API;
+    let requestUrl = path;
+    if (!path.includes(domainUrl)) {
+        requestUrl = domainUrl + path;
+    }
+    return fetch(requestUrl, {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': process.env.X_API_KEY
+        }
+    })
+        .then(res => res.json());
+}

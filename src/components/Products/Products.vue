@@ -1,5 +1,5 @@
 <template>
-    <div class="Products">
+    <div class="container">
         <div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
@@ -23,6 +23,7 @@
                     <th>Type</th>
                     <th>Description</th>
                     <th>Active</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,7 @@
                     <th>{{ product.type.single }}</th>
                     <th>{{ product.description }}</th>
                     <th><input type="checkbox" v-model="product.isActive"></th>
+                    <th><button class="btn btn-danger" @click="deleteProduct(product.id)">Delete Product</button></th>
                 </tr>
                 </tbody>
             </table>
