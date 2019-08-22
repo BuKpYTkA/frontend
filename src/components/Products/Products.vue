@@ -1,18 +1,34 @@
 <template>
     <div class="container">
         <div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" v-bind:class="[{disabled: !pagination.prevPageUrl}]">
-                        <a class="page-link" href="#"
-                           @click.prevent="fetchProducts(pagination.prevPageUrl)">Previous</a>
-                    </li>
-                    <li class="page-item disabled"><a class="page-link" href="#">{{ pagination.currentPage }}</a></li>
-                    <li class="page-item" v-bind:class="[{disabled: !pagination.nextPageUrl}]">
-                        <a class="page-link" href="#" @click.prevent="fetchProducts(pagination.nextPageUrl)">Next</a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="row">
+                <div class="col-md-8">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" v-bind:class="[{disabled: !pagination.prevPageUrl}]">
+                                <a class="page-link" href="#"
+                                   @click.prevent="fetchProducts(pagination.prevPageUrl)">Previous</a>
+                            </li>
+                            <li class="page-item disabled"><a class="page-link" href="#">{{ pagination.currentPage
+                                }}</a>
+                            </li>
+                            <li class="page-item" v-bind:class="[{disabled: !pagination.nextPageUrl}]">
+                                <a class="page-link" href="#"
+                                   @click.prevent="fetchProducts(pagination.nextPageUrl)">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-4">
+                    <autocomplete
+                    :search="search"
+                    placeholder="Type for Search"
+                    aria-label="search"
+                    :get-result-value="getResultValue"
+                    >
+                    </autocomplete>
+                </div>
+            </div>
             <table class="table" v-if="!isLoading">
                 <thead>
                 <tr>
@@ -35,7 +51,9 @@
                     <th>{{ product.type.single }}</th>
                     <th>{{ product.description }}</th>
                     <th><input type="checkbox" v-model="product.isActive"></th>
-                    <th><button class="btn btn-danger" @click="deleteProduct(product.id)">Delete Product</button></th>
+                    <th>
+                        <button class="btn btn-danger" @click="deleteProduct(product.id)">Delete Product</button>
+                    </th>
                 </tr>
                 </tbody>
             </table>

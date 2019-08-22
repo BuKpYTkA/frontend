@@ -5,9 +5,12 @@ import App from './App'
 import router from './router'
 import Spinner from 'vue-simple-spinner'
 import Notification from 'vue-notification'
+import Autocomplete from '@trevoreyre/autocomplete-vue'
+import '@trevoreyre/autocomplete-vue/dist/style.css'
 
 Vue.component('loader', Spinner);
 Vue.use(Notification);
+Vue.use(Autocomplete);
 Vue.config.productionTip = false;
 // Vue.config.errorHandler = function (err, vm, info) {
 //   alert(err);
