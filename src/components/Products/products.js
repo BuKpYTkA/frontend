@@ -41,7 +41,7 @@ export default {
         fetchProducts(pageLink) {
             this.isLoading = true;
             pageLink = pageLink || 'products';
-            transportSend(pageLink)
+            transportSend(pageLink, {action: 'products'})
                 .then(res => {
                     this.products = res.data;
                     this.pagination = makePagination(res.meta, res.links);

@@ -22,7 +22,7 @@ export function transportSend(path, data) {
     if (!path.includes(domainUrl)) {
         requestUrl = domainUrl + path;
     }
-    return fetch(requestUrl, {
+    return fetch('/api/', {
         method: 'post',
         body: JSON.stringify(data),
         headers: {
