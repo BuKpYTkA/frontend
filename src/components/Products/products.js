@@ -103,24 +103,33 @@ export default {
         },
         search(input) {
             const url = process.env.ROOT_API + 'product/autocomplete';
-
+            if (input.length < 1) {
+                this.fetchProducts();
+            }
             return new Promise(resolve => {
                 if (input.length < 3) {
                     return resolve([])
                 }
-
-                fetch(url, {
-                    method: 'POST',
-                    body: JSON.stringify({token: input}),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        resolve(data.data);
-                        console.log(data.data);
-                    })
+                transportSend('product/autocomplete', {token: input})
+                    .then(res => {
+                        this.products = res.data;
+                        console.log(this.products);
+                        // products = this.searchProduct.map(product => product.title);
+                        // console.log(products);
+                        // return products;
+                    });
+                // fetch(url, {
+                //     method: 'POST',
+                //     body: JSON.stringify({token: input}),
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     }
+                // })
+                //     .then(response => response.json())
+                //     .then(data => {
+                //         resolve(data.data);
+                //         console.log(data.data);
+                //     })
             })
         },
 
